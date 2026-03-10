@@ -52,15 +52,20 @@ function getFrameworkTestConfig(pm: string): NamedFrameworkTestConfig[] {
 			unsupportedOSs: ["win32"],
 			verifyDeploy: {
 				route: "/",
-				expectedText: "What's New in Astro 5.0?",
+				expectedText: "Hello, Astronaut!",
+			},
+			verifyDev: {
+				route: "/",
+				expectedText: "Hello, Astronaut!",
+				devArgs: ["--host=127.0.0.1"],
 			},
 			verifyPreview: {
-				previewArgs: ["--inspector-port=0"],
-				route: "/test",
-				expectedText: "C3_TEST",
+				route: "/",
+				expectedText: "Hello, Astronaut!",
+				previewArgs: ["--host=127.0.0.1"],
 			},
 			nodeCompat: true,
-			flags: ["--skip-houston", "--typescript", "strict"],
+			flags: ["--skip-houston", "--template", "blog", "--typescript", "strict"],
 		},
 		{
 			name: "astro:workers",

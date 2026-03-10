@@ -16,10 +16,6 @@ const generate = async (ctx: C3Context) => {
 	// The adapter is added in the `configure` step instead
 	await runFrameworkGenerator(ctx, [
 		ctx.project.name,
-		// Use v5 "basics" template:
-		"--template",
-		// https://github.com/withastro/astro/tree/64533807745d8f2a298e0ad83757e7f05b10c7ba/examples/basics
-		"withastro/astro/examples/basics#64533807745d8f2a298e0ad83757e7f05b10c7ba",
 		// c3 will later install the dependencies
 		"--no-install",
 		// c3 will later ask users if they want to use git
@@ -38,7 +34,7 @@ const configure = async () => {
 		)}`,
 	});
 
-	// Update Astro config to enable platformProxy and imageService
+	// Update Astro config to enable imageService and configure build output for Pages
 	const filePath = "astro.config.mjs";
 
 	updateStatus(`Updating configuration in ${blue(filePath)}`);
@@ -46,31 +42,32 @@ const configure = async () => {
 	transformFile(filePath, {
 		visitCallExpression: function (n) {
 			const callee = n.node.callee as recast.types.namedTypes.Identifier;
-			if (callee.name !== "cloudflare") {
-				return this.traverse(n);
-			}
 
 			const b = recast.types.builders;
-			n.node.arguments = [
-				b.objectExpression([
-					// platformProxy: {
-					//   enabled: true,
-					// },
-					b.objectProperty(
-						b.identifier("platformProxy"),
-						b.objectExpression([
-							b.objectProperty(b.identifier("enabled"), b.booleanLiteral(true)),
-						]),
-					),
-					// imageService: "cloudflare",
-					b.objectProperty(
-						b.identifier("imageService"),
-						b.stringLiteral("cloudflare"),
-					),
-				]),
-			];
 
-			return false;
+			if (callee.name === "defineConfig") {
+				// build: {
+				//   client: "./",
+				//   server: "./_worker.js",
+				// },
+				const configObj = n.node.arguments[0];
+				if (configObj.type === "ObjectExpression") {
+					configObj.properties.push(
+						b.objectProperty(
+							b.identifier("build"),
+							b.objectExpression([
+								b.objectProperty(b.identifier("client"), b.stringLiteral("./")),
+								b.objectProperty(
+									b.identifier("server"),
+									b.stringLiteral("./_worker.js"),
+								),
+							]),
+						),
+					);
+				}
+			}
+
+			return this.traverse(n);
 		},
 	});
 };
@@ -108,7 +105,7 @@ const config: TemplateConfig = {
 	transformPackageJson: async (pkgJson: PackageJson, ctx: C3Context) => ({
 		scripts: {
 			deploy: `astro build && wrangler pages deploy`,
-			preview: `astro build && wrangler pages dev`,
+			preview: `astro build && astro preview`,
 			...(usesTypescript(ctx) && { "cf-typegen": `wrangler types` }),
 		},
 	}),
