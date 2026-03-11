@@ -46,30 +46,7 @@ function getFrameworkTestConfig(pm: string): NamedFrameworkTestConfig[] {
 			flags: ["--no-install", "--no-git-init"],
 		},
 		{
-			name: "astro:pages",
-			argv: ["--platform", "pages"],
-			testCommitMessage: true,
-			unsupportedOSs: ["win32"],
-			verifyDeploy: {
-				route: "/",
-				expectedText: "Hello, Astronaut!",
-			},
-			verifyDev: {
-				route: "/",
-				expectedText: "Hello, Astronaut!",
-				devArgs: ["--host=127.0.0.1"],
-			},
-			verifyPreview: {
-				route: "/",
-				expectedText: "Hello, Astronaut!",
-				previewArgs: ["--host=127.0.0.1"],
-			},
-			nodeCompat: true,
-			flags: ["--skip-houston", "--template", "blog", "--typescript", "strict"],
-		},
-		{
-			name: "astro:workers",
-			argv: ["--platform", "workers"],
+			name: "astro",
 			testCommitMessage: true,
 			unsupportedOSs: ["win32"],
 			verifyDeploy: {
@@ -729,8 +706,7 @@ function getExperimentalFrameworkTestConfig(
 			],
 		},
 		{
-			name: "astro:workers",
-			argv: ["--platform", "workers"],
+			name: "astro",
 			testCommitMessage: true,
 			unsupportedOSs: ["win32"],
 			verifyDeploy: {

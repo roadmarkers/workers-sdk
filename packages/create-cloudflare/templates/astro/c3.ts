@@ -4,7 +4,7 @@ import { runFrameworkGenerator } from "frameworks/index";
 import { runCommand } from "helpers/command";
 import { usesTypescript } from "helpers/files";
 import { detectPackageManager } from "helpers/packageManagers";
-import type { TemplateConfig } from "../../../src/templates";
+import type { TemplateConfig } from "../../src/templates";
 import type { C3Context, PackageJson } from "types";
 
 const { npx } = detectPackageManager();
@@ -59,7 +59,6 @@ const config: TemplateConfig = {
 	devScript: "dev",
 	deployScript: "deploy",
 	previewScript: "preview",
-	path: "templates/astro/workers",
 	generate,
 	configure,
 	transformPackageJson: async (pkgJson: PackageJson, ctx: C3Context) => ({
