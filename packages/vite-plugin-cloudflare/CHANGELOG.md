@@ -1,5 +1,17 @@
 # @cloudflare/vite-plugin
 
+## 1.27.1
+
+### Patch Changes
+
+- [#12834](https://github.com/cloudflare/workers-sdk/pull/12834) [`64edac7`](https://github.com/cloudflare/workers-sdk/commit/64edac70799112a69e28202b9f2e9c1e3aada92c) Thanks [@jamesopstad](https://github.com/jamesopstad)! - Warn when the `assets` field is provided for auxiliary Workers
+
+  Auxiliary Workers do not support static assets. Previously, the `assets` field was silently ignored but we now warn if it is used.
+
+- Updated dependencies [[`8e89e85`](https://github.com/cloudflare/workers-sdk/commit/8e89e85cf4f75b483a2dce5aa6947f050e5f35cc), [`e63539d`](https://github.com/cloudflare/workers-sdk/commit/e63539de64308cd0706b8876a22e1b1ccabe0721), [`8d1e130`](https://github.com/cloudflare/workers-sdk/commit/8d1e130bba5fa4019edab855e817a17110b360d0), [`1dda1c8`](https://github.com/cloudflare/workers-sdk/commit/1dda1c83cc286f5bc8bf7a13ed455265c50b0206), [`4bb61b9`](https://github.com/cloudflare/workers-sdk/commit/4bb61b9758bc4e4349ede7327a1075774178be64)]:
+  - wrangler@4.73.0
+  - miniflare@4.20260310.1
+
 ## 1.27.0
 
 ### Minor Changes

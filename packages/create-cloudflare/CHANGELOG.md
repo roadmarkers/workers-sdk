@@ -1,5 +1,19 @@
 # create-cloudflare
 
+## 2.64.7
+
+### Patch Changes
+
+- [#12512](https://github.com/cloudflare/workers-sdk/pull/12512) [`01f252d`](https://github.com/cloudflare/workers-sdk/commit/01f252db83daff52ede0c582443548833f02caf1) Thanks [@thebeyondr](https://github.com/thebeyondr)! - Fix C3 success summary dashboard link to point to Workers service production view
+
+  The "Dash:" URL now includes `/production` so it opens the correct Workers & Pages service view in the Cloudflare dashboard.
+
+- [#12820](https://github.com/cloudflare/workers-sdk/pull/12820) [`556bce0`](https://github.com/cloudflare/workers-sdk/commit/556bce0acd78e42b84b25247d73699513c2cf1aa) Thanks [@dario-piotrowicz](https://github.com/dario-piotrowicz)! - Generate `app/env.d.ts` and `server/env.d.ts` for Nuxt applications
+
+  Previously, only a top-level `env.d.ts` was created, which meant server files didn't receive Cloudflare types. Now the CLI generates separate `app/env.d.ts` and `server/env.d.ts` files, both importing from a shared `_cloudflare/env.d.ts` to avoid duplication.
+
+  This ensures Cloudflare types are available in both app and server directories.
+
 ## 2.64.6
 
 ### Patch Changes

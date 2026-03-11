@@ -1,5 +1,11 @@
 # miniflare
 
+## 4.20260310.1
+
+### Patch Changes
+
+- [#12775](https://github.com/cloudflare/workers-sdk/pull/12775) [`1dda1c8`](https://github.com/cloudflare/workers-sdk/commit/1dda1c83cc286f5bc8bf7a13ed455265c50b0206) Thanks [@fhanau](https://github.com/fhanau)! - Add support for worker connect handler in miniflare
+
 ## 4.20260310.0
 
 ### Minor Changes

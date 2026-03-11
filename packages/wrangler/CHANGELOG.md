@@ -1,5 +1,70 @@
 # wrangler
 
+## 4.73.0
+
+### Minor Changes
+
+- [#12815](https://github.com/cloudflare/workers-sdk/pull/12815) [`e63539d`](https://github.com/cloudflare/workers-sdk/commit/e63539de64308cd0706b8876a22e1b1ccabe0721) Thanks [@NuroDev](https://github.com/NuroDev)! - Support disabling persistence in `unstable_startWorker()` and `unstable_dev()`
+
+  You can now disable persistence entirely by setting `persist: false` in the `dev` options:
+
+  ```typescript
+  const worker = await unstable_dev("./src/worker.ts", {
+  	persist: false,
+  });
+  ```
+
+  Or when using `unstable_startWorker()`:
+
+  ```typescript
+  const worker = await unstable_startWorker({
+  	entrypoint: "./src/worker.ts",
+  	dev: {
+  		persist: false,
+  	},
+  });
+  ```
+
+  This is useful for testing scenarios where you want to ensure a clean state on each run without any persisted data from previous runs.
+
+### Patch Changes
+
+- [#12734](https://github.com/cloudflare/workers-sdk/pull/12734) [`8e89e85`](https://github.com/cloudflare/workers-sdk/commit/8e89e85cf4f75b483a2dce5aa6947f050e5f35cc) Thanks [@flostellbrink](https://github.com/flostellbrink)! - Add back support for wrangler d1 exports with multiple tables.
+
+  Example:
+
+  ```bash
+  # All tables (default)
+  wrangler d1 export db --output all-tables.sql
+
+  # Single table (unchanged)
+  wrangler d1 export db --output single-table.sql --table foo
+
+  # Multiple tables (new)
+  wrangler d1 export db --output multiple-tables.sql --table foo --table bar
+  ```
+
+- [#12807](https://github.com/cloudflare/workers-sdk/pull/12807) [`8d1e130`](https://github.com/cloudflare/workers-sdk/commit/8d1e130bba5fa4019edab855e817a17110b360d0) Thanks [@MaxwellCalkin](https://github.com/MaxwellCalkin)! - fix: `vectorize` commands now output valid json
+
+  This fixes:
+
+  - `wrangler vectorize create`
+  - `wrangler vectorize info`
+  - `wrangler vectorize insert`
+  - `wrangler vectorize upsert`
+  - `wrangler vectorize list`
+  - `wrangler vectorize list-vectors`
+  - `wrangler vectorize list-metadata-index`
+
+  Also, `wrangler vectorize create --json` now also includes the `created_at`, `modified_on` and `description` fields.
+
+- [#12700](https://github.com/cloudflare/workers-sdk/pull/12700) [`4bb61b9`](https://github.com/cloudflare/workers-sdk/commit/4bb61b9758bc4e4349ede7327a1075774178be64) Thanks [@RiscadoA](https://github.com/RiscadoA)! - Add client-side validation for VPC service host flags
+
+  The `--hostname`, `--ipv4`, and `--ipv6` flags on `wrangler vpc service create` and `wrangler vpc service update` now validate input before sending requests to the API. Previously, invalid values were accepted by the CLI and only rejected by the API with opaque error messages. Now users get clear, actionable error messages for common mistakes like passing a URL instead of a hostname, using an IP address in the `--hostname` flag, or providing malformed IP addresses.
+
+- Updated dependencies [[`1dda1c8`](https://github.com/cloudflare/workers-sdk/commit/1dda1c83cc286f5bc8bf7a13ed455265c50b0206)]:
+  - miniflare@4.20260310.1
+
 ## 4.72.0
 
 ### Minor Changes
